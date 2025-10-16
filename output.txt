@@ -1,0 +1,62 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.1, pytest-8.4.1, pluggy-1.6.0
+rootdir: C:\Users\ninte\Documents\SE-3150\testing-systems-OliverOlsenUT
+plugins: describe-2.2.0, mock-3.15.1, spec-5.0.0
+collected 29 items
+
+test_mydb.py:
+
+MyDB:
+
+  Init:
+    \u2713 It assigns fname attribute
+    \u2713 It creates empty database if it does not exist
+    \u2713 It doesnt empty database if it does exist
+
+  LoadStrings:
+    \u2713 It loads empty database if no data
+    \u2713 It loads database if data
+
+  SaveString:
+    \u2713 It saves a string
+    \u2713 It saves on top of an existing database
+
+  SaveStrings:
+    \u2713 It saves array data
+
+test_squirrel_server.py:
+
+Squirrel server:
+
+  Create squirrel:
+    \u2713 It returns correct response for valid squirrel
+    \u2713 It returns 404 response for providing resource id
+    \u2713 It returns 404 response for invalid path
+    \u2713 It errors for invalid request body
+
+  Delete squirrel:
+    \u2713 It returns the correct response for valid squirrel
+    \u2713 It returns 404 for nonexistent squirrel
+    \u2713 It returns 404 for not providing squirrel id
+    \u2713 It returns 404 for providing the wrong path
+
+  Get squirrel:
+    \u2713 It returns correct response for valid squirrel
+    \u2713 It returns 404 response for invalid squirrel
+
+  Get squirrels:
+    \u2713 It returns 200 status code
+    \u2713 It returns json content type header
+    \u2713 It returns empty json array
+    \u2713 It returns json array with one squirrel
+    \u2713 It returns json array with many squirrels
+    \u2713 It returns 404 status for invalid path
+
+  Update squirrel:
+    \u2713 It returns the correct response for valid squirrel
+    \u2713 It returns 404 for nonexistent squirrel
+    \u2713 It returns 404 for not providing squirrel id
+    \u2713 It returns 404 for providing the wrong path
+    \u2713 It errors for invalid request body
+
+======================== 29 passed in 61.90s (0:01:01) ========================
