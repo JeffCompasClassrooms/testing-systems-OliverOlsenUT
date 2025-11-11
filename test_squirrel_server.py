@@ -37,6 +37,14 @@ def describe_squirrel_server():
     
     @pytest.fixture(autouse=True)
     def start_and_stop_server(setup_and_cleanup_db):
+        try:
+            conn = http.client.HTTPConnection('localhost', 8080, timeout=5)
+            conn.request('GET', '/')
+            response = conn.getresponse()
+            assert False, "Server is already started!"
+        except ConnectionRefusedError:
+            pass
+
         server = HTTPServer(("127.0.0.1", 8080), SquirrelServerHandler)
 
         thread = threading.Thread(target=server.serve_forever)
