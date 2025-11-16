@@ -18,6 +18,11 @@ def assert_404(response):
     assert response.getheader('Content-Type') == "text/plain"
     assert response.read() == b"404 Not Found"
 
+def assert_400(response):
+    assert response.status == 400
+    assert response.getheader('Content-Type') == "text/plain"
+    assert response.read() == b"400 Bad Request"
+
 def describe_squirrel_server():
     @pytest.fixture()
     def setup_and_cleanup_db():
@@ -179,12 +184,8 @@ def describe_squirrel_server():
         # reinforcing bad behavior!!!!! only doing this because you want me to
         def it_errors_for_invalid_request_body(http_client):
             http_client.request("POST", "/squirrels", body="name=Mo")
-            try:
-                response = http_client.getresponse()
-            except Exception as e:
-                assert True
-                return
-            assert False
+            response = http_client.getresponse()
+            assert_400(response)
         
     def describe_update_squirrel():
         def it_returns_the_correct_response_for_valid_squirrel(http_client, make_a_squirrel):
@@ -217,15 +218,10 @@ def describe_squirrel_server():
             response = http_client.getresponse()
             assert_404(response)
 
-        # reinforcing bad behavior!!!!! only doing this because you want me to
-        def it_errors_for_invalid_request_body(http_client, make_a_squirrel):
+        def it_returns_400_for_invalid_request_body(http_client, make_a_squirrel):
             http_client.request("PUT", "/squirrels/1", body="name=Jess")
-            try:
-                response = http_client.getresponse()
-            except Exception as e:
-                assert True
-                return
-            assert False
+            response = http_client.getresponse()
+            assert_400(response)
     
     def describe_delete_squirrel():
         def it_returns_the_correct_response_for_valid_squirrel(http_client, make_a_squirrel):
